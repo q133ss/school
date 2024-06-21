@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -82,5 +84,15 @@ class User extends Authenticatable
     public function teacherLessons()
     {
         return $this->hasMany(Lesson::class, 'teacher_id', 'id');
+    }
+
+    public function scopeWithFilter($query, Request $request)
+    {
+        return $query->when(
+            $request->query('role_id'),
+            function (Builder $query, $role_id) {
+                return $query->where('role_id', $role_id);
+            }
+        );
     }
 }

@@ -36,6 +36,13 @@ class DatabaseSeeder extends Seeder
             'role_id'  => Role::where('slug', 'student')->pluck('id')->first()
         ]);
 
+        User::create([
+            'name'     => 'Админ',
+            'phone'    => '+7(333)333-33-33',
+            'password' => Hash::make('password'),
+            'role_id'  => Role::where('slug', 'admin')->pluck('id')->first()
+        ]);
+
         DB::table('student_teacher')
             ->insert([
                 'student_id' => $student->id,
@@ -71,6 +78,28 @@ class DatabaseSeeder extends Seeder
         ];
         foreach ($lessons as $lesson) {
             Lesson::create($lesson);
+        }
+
+        for($i = 2; $i < 31; $i++){
+            $phoneCode = $i < 10 ? "0".$i : $i;
+            $student = User::create([
+                'name'     => 'Ученик '.$i,
+                'phone'    => '+7(222)222-22-'.$phoneCode,
+                'password' => Hash::make('password'),
+                'role_id'  => Role::where('slug', 'student')->pluck('id')->first()
+            ]);
+
+            DB::table('student_teacher')
+                ->insert([
+                    'student_id' => $student->id,
+                    'teacher_id' => $teacher->id
+                ]);
+
+            foreach ($lessons as $lesson) {
+                unset($lesson['student_id']);
+                $lesson['student_id'] = $student->id;
+                Lesson::create($lesson);
+            }
         }
     }
 }
