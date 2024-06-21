@@ -78,4 +78,9 @@ class User extends Authenticatable
         return $this->hasMany(Homework::class, 'student_id', 'id')
             ->where('teacher_id', Auth()->guard('sanctum')->id());
     }
+
+    public function teacherLessons()
+    {
+        return $this->hasMany(Lesson::class, 'teacher_id', 'id');
+    }
 }

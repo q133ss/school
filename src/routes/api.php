@@ -14,4 +14,5 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['auth:sanctum', 'is.teache
     Route::post('/student/homework', [\App\Http\Controllers\Teacher\StudentController::class, 'homework']);
     Route::post('/student/homework/{id}', [\App\Http\Controllers\Teacher\StudentController::class, 'homeworkUpdate']);
     Route::delete('/student/homework/{id}', [\App\Http\Controllers\Teacher\StudentController::class, 'homeworkDelete']);
+    Route::apiResource('lesson', \App\Http\Controllers\Teacher\LessonController::class);
 });
