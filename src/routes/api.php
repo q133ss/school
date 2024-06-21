@@ -10,4 +10,5 @@ Route::get('/teachers', [App\Http\Controllers\AuthController::class, 'teachers']
 
 Route::group(['prefix' => 'teacher', 'middleware' => ['auth:sanctum', 'is.teacher']], function (){
     Route::get('/students', [\App\Http\Controllers\Teacher\StudentController::class, 'index']);
+    Route::post('/student/comment/{student_id}', [\App\Http\Controllers\Teacher\StudentController::class, 'comment']);
 });
