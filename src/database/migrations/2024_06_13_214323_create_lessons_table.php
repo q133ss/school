@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('date');
             $table->time('time');
             $table->unsignedInteger('price');
-            $table->unsignedInteger('duration');
+            $table->time('duration');
             $table->string('description');
             $table->foreignId('student_id');
             $table->foreignId('teacher_id');

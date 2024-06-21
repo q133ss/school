@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('homework', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('student_id');
             $table->foreignId('lesson_id');
+            $table->foreignId('teacher_id');
             $table->string('task');
             $table->timestamps();
         });

@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -62,5 +63,19 @@ class User extends Authenticatable
     public function students(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class, 'student_teacher', 'teacher_id', 'student_id');
+    }
+
+    public function isStudent(int $student_id): bool
+    {
+        return DB::table('student_teacher')
+        ->where('student_id', $student_id)
+        ->where('teacher_id', $this->id)
+        ->exists();
+    }
+
+    public function homework()
+    {
+        return $this->hasMany(Homework::class, 'student_id', 'id')
+            ->where('teacher_id', Auth()->guard('sanctum')->id());
     }
 }
