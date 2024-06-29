@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Teacher;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Teacher\StudentController\CommentRequest;
 use App\Http\Requests\Teacher\StudentController\HomeworkRequest;
+use App\Http\Requests\Teacher\StudentController\UpdateRequest;
 use App\Services\Teacher\CommentService;
 use App\Services\Teacher\StudentService;
 use Illuminate\Http\Request;
@@ -34,5 +35,10 @@ class StudentController extends Controller
     public function homeworkDelete(int $id)
     {
         return (new StudentService())->homeworkDelete($id);
+    }
+
+    public function update(UpdateRequest $request, $id)
+    {
+        return (new StudentService())->update($id, $request);
     }
 }

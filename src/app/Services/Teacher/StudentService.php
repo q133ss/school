@@ -3,8 +3,10 @@
 namespace App\Services\Teacher;
 
 use App\Http\Requests\Teacher\StudentController\HomeworkRequest;
+use App\Http\Requests\Teacher\StudentController\UpdateRequest;
 use App\Models\Homework;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class StudentService
 {
@@ -55,5 +57,23 @@ class StudentService
         return Response()->json([
             'message'  => 'true'
         ]);
+    }
+
+    public function update(int $id, UpdateRequest $request)
+    {
+        $user = User::findOrFail($id);
+        $check = DB::table('student_teacher')
+            ->where('teacher_id', Auth()->guard('sanctum')->id())
+            ->where('student_id', $id)
+            ->exists();
+
+        if($check){
+            $update = $user->update($request->validated());
+            return Response()->json([
+                'message'  => 'true',
+                'user'     => $user
+            ]);
+        }
+        abort(403, 'У вас нет прав');
     }
 }

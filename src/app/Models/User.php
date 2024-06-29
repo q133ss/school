@@ -30,7 +30,11 @@ class User extends Authenticatable
         'target',
         'avg_rate',
         'percent',
-        'main_course'
+        'main_course',
+        'avg_rate_current',
+        'month_name_current',
+        'avg_rate_last',
+        'month_name_last'
     ];
 
     /**
@@ -81,9 +85,19 @@ class User extends Authenticatable
             ->where('teacher_id', Auth()->guard('sanctum')->id());
     }
 
+    public function studentHomeworks()
+    {
+        return $this->hasMany(Homework::class, 'student_id', 'id');
+    }
+
     public function teacherLessons()
     {
         return $this->hasMany(Lesson::class, 'teacher_id', 'id');
+    }
+
+    public function studentLessons()
+    {
+        return $this->hasMany(Lesson::class, 'student_id', 'id');
     }
 
     public function scopeWithFilter($query, Request $request)

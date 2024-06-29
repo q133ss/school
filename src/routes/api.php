@@ -8,12 +8,18 @@ Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
 Route::get('/teachers', [App\Http\Controllers\AuthController::class, 'teachers']);
 
+Route::group(['middleware' => 'auth:sanctum'], function (){
+    Route::get('/me', [\App\Http\Controllers\Student\MeController::class, 'me']);
+    Route::get('/homeworks', [\App\Http\Controllers\Student\MeController::class, 'homeworks']);
+});
+
 Route::group(['prefix' => 'teacher', 'middleware' => ['auth:sanctum', 'is.teacher']], function (){
     Route::get('/students', [\App\Http\Controllers\Teacher\StudentController::class, 'index']);
     Route::post('/student/comment/{student_id}', [\App\Http\Controllers\Teacher\StudentController::class, 'comment']);
     Route::post('/student/homework', [\App\Http\Controllers\Teacher\StudentController::class, 'homework']);
     Route::post('/student/homework/{id}', [\App\Http\Controllers\Teacher\StudentController::class, 'homeworkUpdate']);
     Route::delete('/student/homework/{id}', [\App\Http\Controllers\Teacher\StudentController::class, 'homeworkDelete']);
+    Route::patch('/student/{id}', [\App\Http\Controllers\Teacher\StudentController::class, 'update']);
     Route::apiResource('lesson', \App\Http\Controllers\Teacher\LessonController::class);
 });
 

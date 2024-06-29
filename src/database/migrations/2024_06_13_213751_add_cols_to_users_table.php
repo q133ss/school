@@ -16,7 +16,12 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->enum('lang', ['en','cn','es'])->nullable();
             $table->json('target')->nullable();
-            $table->json('avg_rate')->nullable()->comment('Ср бал, Май, апрель..');
+            $table->string('avg_rate_current')->nullable()->comment('Ср бал, за текущий месяц');
+            $table->string('month_name_current')->nullable()->comment('Название месяца');
+
+            $table->string('avg_rate_last')->nullable()->comment('Ср бал, за прошлый месяц');
+            $table->string('month_name_last')->nullable()->comment('Название месяца');
+
             $table->unsignedSmallInteger('percent')->nullable();
             $table->string('main_course')->nullable();
         });
