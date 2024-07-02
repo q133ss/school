@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Storage;
 
 class StudentService
 {
+    public function me()
+    {
+        $user = Auth()->guard('sanctum')->user()->load('studentLessons');
+        $lessonsCount = $user->studentLessons->count();
+        $user['lessonsCount'] = $lessonsCount;
+
+        return $user;
+    }
     public function getTg()
     {
         $id = Auth()->guard('sanctum')->id();

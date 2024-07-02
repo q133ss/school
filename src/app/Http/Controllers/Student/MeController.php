@@ -11,7 +11,7 @@ class MeController extends Controller
 {
     public function me()
     {
-        return Auth()->guard('sanctum')->user()->load('studentLessons');
+        return (new StudentService())->me();
     }
 
     public function homeworks()

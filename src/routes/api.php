@@ -7,11 +7,11 @@ Route::post('/register', [App\Http\Controllers\AuthController::class, 'register'
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
 /*
- * Me
- * Login
- * Register
+ * Me+
+ * Login+
+ * Register+
  *
- * Аварка
+ * Аварка+
  *
  * Форма
  */
@@ -39,3 +39,5 @@ Route::group(['prefix' => 'teacher', 'middleware' => ['auth:sanctum', 'is.teache
 Route::group(['prefix' => 'admin', 'middleware' => ['auth:sanctum', 'is.admin']], function (){
     Route::apiResource('users', \App\Http\Controllers\Admin\UsersController::class);
 });
+
+Route::post('form', [\App\Http\Controllers\FormController::class, 'form']);

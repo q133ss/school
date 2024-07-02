@@ -20,14 +20,16 @@ class AuthService
             'student_id' => $user->id
         ]);
 
-        return Response()->json(['user' => $user, 'token' => $token->plainTextToken]);
+        $usr = User::findOrFail($user->id)->load('studentLessons');
+
+        return Response()->json(['user' => $usr, 'token' => $token->plainTextToken]);
     }
 
     public function login(array $data): \Illuminate\Http\JsonResponse
     {
         $user = User::where('phone', $data['phone'])->first();
         $token = $user->createToken('web');
-        return Response()->json(['user' => $user, 'token' => $token->plainTextToken]);
+        return Response()->json(['user' => $user->load('studentLessons'), 'token' => $token->plainTextToken]);
     }
 
     public function teachers()
