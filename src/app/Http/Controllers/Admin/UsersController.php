@@ -16,7 +16,13 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        return User::where('id', '!=', Auth()->guard('sanctum')->id())->withFilter($request)->paginate();
+        return User::where('id', '!=', Auth()->guard('sanctum')->id())
+            ->withFilter($request)
+            ->with('studentLessons')
+            ->withCount('studentLessons')
+            ->with('teacherLessons')
+            ->withCount('teacherLessons')
+            ->paginate();
     }
 
     /**
