@@ -23,6 +23,9 @@ return new class extends Migration
             $table->string('month_name_last')->nullable()->comment('Название месяца');
 
             $table->unsignedSmallInteger('percent')->nullable();
+
+            $table->string('telegram')->nullable();
+
             $table->string('main_course')->nullable();
         });
     }

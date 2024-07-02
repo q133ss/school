@@ -6,11 +6,24 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [App\Http\Controllers\AuthController::class, 'register']);
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login']);
 
+/*
+ * Me
+ * Login
+ * Register
+ *
+ * Аварка
+ *
+ * Форма
+ */
+
 Route::get('/teachers', [App\Http\Controllers\AuthController::class, 'teachers']);
 
 Route::group(['middleware' => 'auth:sanctum'], function (){
     Route::get('/me', [\App\Http\Controllers\Student\MeController::class, 'me']);
     Route::get('/homeworks', [\App\Http\Controllers\Student\MeController::class, 'homeworks']);
+    Route::get('/get/teacher/tg', [\App\Http\Controllers\Student\MeController::class, 'getTg']);
+
+    Route::post('/avatar', [\App\Http\Controllers\Student\MeController::class, 'avatar']);
 });
 
 Route::group(['prefix' => 'teacher', 'middleware' => ['auth:sanctum', 'is.teacher']], function (){
