@@ -13,7 +13,9 @@ class StudentService
     {
         $user = Auth()->guard('sanctum')->user()->load('studentLessons');
         $lessonsCount = $user->studentLessons->count();
+        $avatar = $user->avatar;
         $user['lessonsCount'] = $lessonsCount;
+        $user['avatar'] = $avatar;
 
         return $user;
     }

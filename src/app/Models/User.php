@@ -109,4 +109,10 @@ class User extends Authenticatable
             }
         );
     }
+
+    public function avatar()
+    {
+        return $this->morphOne(File::class, 'fileable')
+            ->where('category', 'avatar');
+    }
 }
